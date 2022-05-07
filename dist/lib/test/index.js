@@ -21,11 +21,10 @@ var __asyncGenerator = (this && this.__asyncGenerator) || function (thisArg, _ar
     function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const bloc_1 = require("./lib/bloc");
+const bloc_1 = require("../bloc");
 var CounterEvent;
 (function (CounterEvent) {
     CounterEvent["increament"] = "INCREAMENT";
-    CounterEvent["decreament"] = "DECREAMENT";
 })(CounterEvent || (CounterEvent = {}));
 class MyCounterBloc extends bloc_1.Bloc {
     constructor() {
@@ -33,15 +32,7 @@ class MyCounterBloc extends bloc_1.Bloc {
     }
     initialEventWithState(event) {
         return __asyncGenerator(this, arguments, function* initialEventWithState_1() {
-            switch (event) {
-                case CounterEvent.increament:
-                    console.log("inc");
-                    yield yield __await(this.state + 1);
-                    break;
-                case CounterEvent.decreament:
-                    yield yield __await(this.state - 1);
-                    break;
-            }
+            yield yield __await(this.state + 1);
         });
     }
 }
@@ -49,11 +40,7 @@ class MyCounterBloc extends bloc_1.Bloc {
     return __awaiter(this, void 0, void 0, function* () {
         const counterBloc = new MyCounterBloc();
         counterBloc.execute(CounterEvent.increament);
-        counterBloc.execute(CounterEvent.increament);
-        counterBloc.execute(CounterEvent.decreament);
-        counterBloc.listen(data => {
-            console.log("new state => ", data);
-        });
+        console.log(counterBloc.state);
     });
 })();
 function wait(ms) {
@@ -65,4 +52,4 @@ function wait(ms) {
         });
     });
 }
-//# sourceMappingURL=app.js.map
+//# sourceMappingURL=index.js.map
