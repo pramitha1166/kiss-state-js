@@ -73,6 +73,7 @@ var Bloc = /** @class */ (function (_super) {
         _this.stateSubject = new rxjs_1.Subject();
         _this.bindStateWithSubscription();
         return _this;
+        //this.bindStateWithPromise()
     }
     Object.defineProperty(Bloc.prototype, "state", {
         //return state
@@ -86,7 +87,15 @@ var Bloc = /** @class */ (function (_super) {
     Bloc.prototype.execute = function (event) {
         this.eventSubject.next(event);
     };
+    Bloc.prototype.listen = function (onData) {
+        return this.stateSubject.subscribe(onData);
+    };
+    Bloc.prototype.onPrmise = function (event) {
+        return;
+    };
+    //abstract onPromise(event: Event): Promise<State>
     Bloc.prototype.transformEventIntoObservableWithNextFunc = function (events, next) {
+        events.subscribe(function (event) { return console.log(event); });
         return events.pipe(operators_1.concatMap(next));
     };
     Bloc.prototype.getNewTransitionFromCurrentOne = function (transition) {
@@ -94,13 +103,33 @@ var Bloc = /** @class */ (function (_super) {
     };
     Bloc.prototype.bindStateWithSubscription = function () {
         var _this = this;
+        console.log("binding state");
         this.transitionSubscription = this.getNewTransitionFromCurrentOne(this.transformEventIntoObservableWithNextFunc(this.eventSubject, function (event) {
             return asyncToObservable(_this.initialEventWithState(event)).pipe(operators_1.map(function (newState, _) {
+                console.log(newState);
                 return new transition_1.Transition(_this.state, event, newState);
             }));
         })).subscribe(function (transition) {
             try {
                 _this._state = transition.newState;
+                _this.stateSubject.next(transition.newState);
+            }
+            catch (error) {
+            }
+        });
+    };
+    Bloc.prototype.bindStateWithPromise = function () {
+        var _this = this;
+        console.log("binding state");
+        this.transitionSubscription = this.getNewTransitionFromCurrentOne(this.transformEventIntoObservableWithNextFunc(this.eventSubject, function (event) {
+            return asyncToObservable(_this.onPrmise(event)).pipe(operators_1.map(function (newState, _) {
+                console.log(newState);
+                return new transition_1.Transition(_this.state, event, newState);
+            }));
+        })).subscribe(function (transition) {
+            try {
+                _this._state = transition.newState;
+                _this.stateSubject.next(transition.newState);
             }
             catch (error) {
             }
@@ -109,8 +138,23 @@ var Bloc = /** @class */ (function (_super) {
     return Bloc;
 }(rxjs_1.Observable));
 exports.Bloc = Bloc;
+function singleAsyncToObservable(item) {
+    var _this = this;
+    return new rxjs_1.Observable(function (observer) { return void (function () { return __awaiter(_this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            item.then(function (res) {
+                observer.next(res);
+                observer.complete();
+            })["catch"](function (err) {
+                observer.error(err);
+            });
+            return [2 /*return*/];
+        });
+    }); }); });
+}
 function asyncToObservable(iterable) {
     var _this = this;
+    console.log("async to ons");
     return new rxjs_1.Observable(function (observer) { return void (function () { return __awaiter(_this, void 0, void 0, function () {
         var iterable_1, iterable_1_1, item, e_1_1, error_1;
         var e_1, _a;
@@ -127,7 +171,9 @@ function asyncToObservable(iterable) {
                 case 3:
                     if (!(iterable_1_1 = _b.sent(), !iterable_1_1.done)) return [3 /*break*/, 5];
                     item = iterable_1_1.value;
-                    observer.next();
+                    console.log(item);
+                    observer.next(item);
+                    observer.complete();
                     _b.label = 4;
                 case 4: return [3 /*break*/, 2];
                 case 5: return [3 /*break*/, 12];
@@ -154,5 +200,5 @@ function asyncToObservable(iterable) {
                 case 14: return [2 /*return*/];
             }
         });
-    }); }); });
+    }); })(); });
 }

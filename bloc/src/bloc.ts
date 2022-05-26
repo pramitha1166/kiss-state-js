@@ -4,6 +4,8 @@ import { Transition } from './transition';
 
 
 export type NextFunction<Event, State> = (event: Event) => Observable<Transition<Event, State>>
+export type OnPrmiseCallBack<State> = () => AsyncIterableIterator<State>
+
 export abstract class Bloc<Event, State> extends Observable<State> {
 
 
@@ -17,6 +19,7 @@ export abstract class Bloc<Event, State> extends Observable<State> {
         super();
         this.stateSubject = new Subject();
         this.bindStateWithSubscription()
+        //this.bindStateWithPromise()
     }
 
 
@@ -32,13 +35,20 @@ export abstract class Bloc<Event, State> extends Observable<State> {
 
     listen(
         onData: (data: State) => void
-    ) {
-        this.stateSubject.subscribe(onData)
+    ): Subscription {
+        return this.stateSubject.subscribe(onData)
     }
 
     //map each events with state
     abstract initialEventWithState(event: Event) : AsyncIterableIterator<State>
 
+    public onPrmise(
+        event: Event
+    ): AsyncIterableIterator<State> {
+        return 
+    }
+
+    //abstract onPromise(event: Event): Promise<State>
 
     transformEventIntoObservableWithNextFunc(
         events: Observable<Event>,
@@ -48,10 +58,13 @@ export abstract class Bloc<Event, State> extends Observable<State> {
         return events.pipe(concatMap(next))
     }
 
+
+
     getNewTransitionFromCurrentOne(transition: Observable<Transition<Event, State>>) : Observable<Transition<Event, State>> {
         return transition;
     }
 
+    
     public bindStateWithSubscription() {
         console.log("binding state")
         this.transitionSubscription = this.getNewTransitionFromCurrentOne(
@@ -72,8 +85,64 @@ export abstract class Bloc<Event, State> extends Observable<State> {
             }
         })
     }
+    
 
+    public bindStateWithPromise() {
+        console.log("binding state")
+        this.transitionSubscription = this.getNewTransitionFromCurrentOne(
+            this.transformEventIntoObservableWithNextFunc(this.eventSubject, (event: Event) => {
+                return asyncToObservable(this.onPrmise(event)).pipe(
+                    map((newState: State, _: number) => {
+                        console.log(newState)
+                        return new Transition(this.state, event, newState);
+                    })
+                )
+            })
+        ).subscribe((transition: Transition<Event, State>)=> {
+            try {
+                this._state = transition.newState
+                this.stateSubject.next(transition.newState)
+            } catch (error) {
+                
+            }
+        })
+    }
 
+/*
+    public bindStateWithPromise() {
+        this.transitionSubscription = this.getNewTransitionFromCurrentOne(
+            this.transformEventIntoObservableWithNextFunc(this.eventSubject, (event: Event) => {
+                return singleAsyncToObservable(this.onPromise(event)).pipe(
+                    map((newState: State, _: number) => {
+                        console.log(newState)
+                        return new Transition(this.state, event, newState);
+                    })
+                )
+            })
+        ).subscribe((transition: Transition<Event, State>)=> {
+            try {
+                this._state = transition.newState
+                this.stateSubject.next(transition.newState)
+            } catch (error) {
+                
+            }
+        })
+    }
+    */
+
+}
+
+function singleAsyncToObservable<T>(item: Promise<T>): Observable<T> {
+    return new Observable<T> (
+        observer => void(async() => {
+            item.then(res => {
+                observer.next(res)
+                observer.complete()
+            }).catch(err => {
+                observer.error(err)
+            })
+        })
+    )
 }
 
 function asyncToObservable<T>(iterable:AsyncIterableIterator<T>): Observable<T> {
