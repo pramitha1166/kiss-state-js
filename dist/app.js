@@ -21,12 +21,41 @@ var __asyncGenerator = (this && this.__asyncGenerator) || function (thisArg, _ar
     function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const bloc_1 = require("./lib/bloc");
-var CounterEvent;
-(function (CounterEvent) {
-    CounterEvent["increament"] = "INCREAMENT";
-    CounterEvent["decreament"] = "DECREAMENT";
-})(CounterEvent || (CounterEvent = {}));
+exports.CartBloc = exports.MyCounterBloc = void 0;
+const bloc_1 = require("./bloc/bloc");
+;
+var CarEvents;
+(function (CarEvents) {
+    CarEvents["add"] = "add";
+    CarEvents["remove"] = "remove";
+})(CarEvents || (CarEvents = {}));
+;
+class CarEvent {
+    constructor(_car, _events) {
+        this._car = _car;
+        this._events = _events;
+    }
+    get car() {
+        return this._car;
+    }
+    ;
+    get events() {
+        return this._events;
+    }
+    ;
+}
+class Car {
+    constructor(_name, _model) {
+        this._name = _name;
+        this._model = _model;
+    }
+    get name() {
+        return this._name;
+    }
+    get model() {
+        return this._model;
+    }
+}
 class MyCounterBloc extends bloc_1.Bloc {
     constructor() {
         super(0);
@@ -34,35 +63,67 @@ class MyCounterBloc extends bloc_1.Bloc {
     initialEventWithState(event) {
         return __asyncGenerator(this, arguments, function* initialEventWithState_1() {
             switch (event) {
-                case CounterEvent.increament:
+                case "INCREAMENT" /* increament */:
                     console.log("inc");
                     yield yield __await(this.state + 1);
                     break;
-                case CounterEvent.decreament:
+                case "DECREAMENT" /* decreament */:
                     yield yield __await(this.state - 1);
                     break;
             }
         });
     }
+    onPromise(event) {
+        return new Promise((res, rej) => {
+            res(this.state);
+        });
+    }
 }
+exports.MyCounterBloc = MyCounterBloc;
+class CartBloc extends bloc_1.Bloc {
+    constructor() {
+        super([]);
+    }
+    initialEventWithState(event) {
+        return __asyncGenerator(this, arguments, function* initialEventWithState_2() {
+            switch (event.events) {
+                case CarEvents.add:
+                    this.state.push(event.car);
+                    yield yield __await(this.state);
+                case CarEvents.remove:
+                    this.state.pop();
+                    yield yield __await(this.state);
+            }
+        });
+    }
+}
+exports.CartBloc = CartBloc;
 (function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        const counterBloc = new MyCounterBloc();
-        counterBloc.execute(CounterEvent.increament);
-        counterBloc.execute(CounterEvent.increament);
-        counterBloc.execute(CounterEvent.decreament);
+        //const counterBloc = new MyCounterBloc();
+        //counterBloc.execute(CounterEvent.increament);
+        //counterBloc.execute(CounterEvent.increament);
+        //counterBloc.execute(CounterEvent.decreament);
+        const carBloc = new CartBloc();
+        const car = new Car("tesla", "model s");
+        carBloc.execute(new CarEvent(car, CarEvents.add));
+        /*
         counterBloc.listen(data => {
-            console.log("new state => ", data);
+            console.log("new state => ", data)
+        })
+        */
+        carBloc.listen(data => {
+            console.log("new car state => ", data);
         });
     });
 })();
-function wait(ms) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return new Promise((resolve, _) => {
-            setTimeout(() => {
-                resolve();
-            }, ms);
-        });
+/*
+async function wait(ms: number): Promise<void> {
+    return new Promise<void>((resolve, _) => {
+      setTimeout(() => {
+        resolve();
+      }, ms);
     });
-}
+  }
+  */ 
 //# sourceMappingURL=app.js.map
