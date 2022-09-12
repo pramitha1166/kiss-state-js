@@ -1,11 +1,11 @@
 {
-  "name": "rxjs",
+  "name": "kiss-state-js",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/app.js",
+  "description": "This is the bloc type state management tool for the TypeScript base web application",
+  "main": "dist/index.js",
   "type": "commonjs",
   "scripts": {
-    "start": "tsc && node dist/app.js",
+    "start": "tsc && node dist/index.js",
     "lint": "eslint . --ext .ts",
     "test": "jest"
   },
@@ -14,7 +14,11 @@
       "^.+\\.[t|j]sx?$": "babel-jest"
     }
   },
-  "author": "",
+  "author": "pramitha wanigarathne",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:pramitha1166/kiss-state-js.git"
+  },
   "license": "ISC",
   "devDependencies": {
     "@babel/preset-env": "^7.17.10",
