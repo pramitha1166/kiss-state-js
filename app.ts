@@ -1,4 +1,4 @@
-import { Bloc } from './bloc/bloc';
+import { Bloc } from './lib/bloc'
 
 export const enum CounterEvent {
     increament = "INCREAMENT",
