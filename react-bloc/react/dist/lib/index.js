@@ -14,7 +14,5 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(require("../lib/src/bloc"), exports);
-__exportStar(require("../lib/src/bloc-observer"), exports);
-__exportStar(require("../lib/src/transition"), exports);
-//# sourceMappingURL=bloc.js.map
+__exportStar(require("./src/bloc-builder"), exports);
+//# sourceMappingURL=index.js.map

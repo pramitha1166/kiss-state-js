@@ -10,16 +10,16 @@ test('test cart block ', () => {
  })
  */
 
-describe('app.ts', () => { 
-    test('test block', () => { 
+// describe('app.ts', () => { 
+//     test('test block', () => { 
 
-        const myCounterBloc = new MyCounterBloc()
-        myCounterBloc.execute(CounterEvent.increament)
+//         const myCounterBloc = new MyCounterBloc()
+//         myCounterBloc.execute(CounterEvent.increament)
     
-        myCounterBloc.listen(data=> {
-            expect(data).toBe(1)
-        })
+//         myCounterBloc.listen(data=> {
+//             expect(data).toBe(1)
+//         })
     
-    })
-})
+//     })
+// })
 
