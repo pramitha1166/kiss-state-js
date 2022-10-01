@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import {} from 'kiss-state-js'
-import {} from 'kiss-state-js-react'
+import {} from 'kiss-state-js-react/dist/index.js'
 
 function App() {
   return (
