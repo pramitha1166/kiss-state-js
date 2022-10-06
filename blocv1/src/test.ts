@@ -3,7 +3,7 @@ import { Bloc } from "./bloc";
 abstract class CounterEvent{}
 
 class IncrementEvent extends CounterEvent {
-    public fNumber: number = 8;
+    public fNumber: number = 100;
 }
 
 class CounterBloc extends Bloc<CounterEvent, number> {
@@ -25,8 +25,8 @@ class CounterBloc extends Bloc<CounterEvent, number> {
 // }
 
 let bloc = new CounterBloc();
-bloc.on(IncrementEvent, (event) => {
-    return new IncrementEvent().fNumber + 2;
+bloc.on<IncrementEvent>(new IncrementEvent(), (event) => {
+    return event.fNumber + 2;
 });
 //bloc.increament()
 //bloc.decreament()

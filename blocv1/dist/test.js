@@ -25,7 +25,7 @@ var IncrementEvent = (function (_super) {
     __extends(IncrementEvent, _super);
     function IncrementEvent() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.fNumber = 8;
+        _this.fNumber = 100;
         return _this;
     }
     return IncrementEvent;
@@ -44,8 +44,8 @@ var CounterBloc = (function (_super) {
     return CounterBloc;
 }(bloc_1.Bloc));
 var bloc = new CounterBloc();
-bloc.on(IncrementEvent, function (event) {
-    return new IncrementEvent().fNumber + 2;
+bloc.on(new IncrementEvent(), function (event) {
+    return event.fNumber + 2;
 });
 bloc.call(IncrementEvent);
 console.log(bloc.state);

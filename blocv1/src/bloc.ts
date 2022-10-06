@@ -5,11 +5,11 @@ export interface EventHandler<State> {
     (data : State): Function;
 }
 
-export abstract class Bloc<Event, State> extends BlocBase<State, Event> {
+export abstract class Bloc<Event extends Object, State> extends BlocBase<State, Event> {
 
-    add(event: Event) {
-        this.eventController.next(event);
-    }
+    // private add(event: Event) {
+    //     this.eventController.next(event);
+    // }
 
     private emitter : TypedEvent<Event, State>;
 
@@ -32,7 +32,7 @@ export abstract class Bloc<Event, State> extends BlocBase<State, Event> {
     //     })
     // }
 
-    on(event: Event, handler: ((event: Event) => State)) {
+    on<E extends Event>(event: E, handler: ((event: E) => State)) {
         //this.emitter.listen(event, handler);
         this.emitter.on(() => handler(event))
     }
@@ -44,7 +44,6 @@ export abstract class Bloc<Event, State> extends BlocBase<State, Event> {
         this._state = this.emitter.emit(event)
         
     }
-
 
 
     addNewState(state: State) {
