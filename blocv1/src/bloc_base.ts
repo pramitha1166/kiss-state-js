@@ -32,10 +32,10 @@ export interface Closable{
 export abstract class BlocBase<State, Event> implements StateStreamable<State>, Emittable<State>, ErrorSink {
 
     _state : State;
-    _emitted: boolean;
+    //_emitted: boolean;
 
-    _stateController : Subject<State> = new Subject<State>;
-    eventController = new Subject<Event>;
+    private _stateController : Subject<State> = new Subject<State>;
+    //eventController = new Subject<Event>;
 
     
     

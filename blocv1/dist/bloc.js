@@ -25,9 +25,6 @@ var Bloc = (function (_super) {
         _this.emitter = new event_emitter_1.TypedEvent();
         return _this;
     }
-    Bloc.prototype.add = function (event) {
-        this.eventController.next(event);
-    };
     Bloc.prototype.on = function (event, handler) {
         this.emitter.on(function () { return handler(event); });
     };

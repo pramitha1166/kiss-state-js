@@ -5,7 +5,6 @@ var rxjs_1 = require("rxjs");
 var BlocBase = (function () {
     function BlocBase(initialState) {
         this._stateController = new rxjs_1.Subject;
-        this.eventController = new rxjs_1.Subject;
         this._state = initialState;
         this.emit(initialState);
         var observer = {
