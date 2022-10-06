@@ -1,0 +1,32 @@
+{
+  "name": "kiss-state-bloc-v1",
+  "version": "1.0.0",
+  "description": "Bloc type state management solution for typescript",
+  "main": "./src/bloc.ts",
+  "keywords": [
+    "react",
+    "state",
+    "reactjs",
+    "state-management",
+    "business-logic",
+    "BLoC",
+    "bloc"
+  ],
+  "scripts": {
+    "start": "tsc | node ./dist/test.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pramitha Wanigarathne",
+  "license": "ISC",
+  "dependencies": {
+    "rxjs": "^7.5.7"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.23",
+    "typescript": "^4.8.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:pramitha1166/kiss-state-js.git#react"
+  }
+}
