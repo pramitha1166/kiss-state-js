@@ -1,4 +1,4 @@
-import { Bloc } from '../../lib/bloc'
+import { Bloc } from '../../bloc/lib/bloc'
 
 enum CounterEvent {
     increament = "INCREAMENT"
