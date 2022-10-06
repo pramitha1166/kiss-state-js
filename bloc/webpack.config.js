@@ -1,15 +1,15 @@
-const path = require('path');
+const path = require('path')
+const babel = require('babel-loader')
 
 module.exports = {
     entry: './lib/bloc.ts',
     target: 'node',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'kiss-state-react.js',
-        library: 'kiss-state-react',
+        filename: 'kiss-state-js.js',
+        library: 'kiss-state-js',
         libraryTarget: 'umd',
         globalObject: 'this',
-        umdNamedDefine: true,
     },
     module: {
         rules: [

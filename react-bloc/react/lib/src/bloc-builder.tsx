@@ -1,5 +1,5 @@
 //import { Bloc } from 'kiss-'
-import {Bloc} from 'kiss-state-js/lib/bloc';
+import {Bloc} from 'kiss-state-js';
 import * as React from 'react'
 import { Subscription } from 'rxjs'
 
