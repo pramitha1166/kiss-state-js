@@ -11,10 +11,10 @@ export interface Disposable{
 /// 
 export class TypedEvent<Event, State> {
 
-    ///
+    /// 
     private listners: Listener<Event, State>[] = [];
 
-    //
+    /// 
     on = (listener: Listener<Event, State>): Disposable => {
         this.listners.push(listener)
         return {
