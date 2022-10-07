@@ -1,8 +1,8 @@
 {
-  "name": "kiss-js-bloc",
+  "name": "kiss-js-bloc-react",
   "version": "1.0.0",
-  "description": "Bloc type state management solution for typescript",
-  "main": "./src/bloc.ts",
+  "description": "Bloc type state management solution for typescript | The react implementation",
+  "main": "index.ts",
   "keywords": [
     "react",
     "state",
@@ -13,17 +13,21 @@
     "bloc"
   ],
   "scripts": {
-    "start": "tsc | node ./dist/test.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Pramitha Wanigarathne",
   "license": "ISC",
   "dependencies": {
-    "rxjs": "^7.5.7"
+    "kiss-js-bloc": "^1.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^18.7.23",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "@types/node": "^18.7.17",
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.3"
+
   },
   "repository": {
     "type": "git",
