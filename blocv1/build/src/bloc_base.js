@@ -2,8 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlocBase = void 0;
 var rxjs_1 = require("rxjs");
-var BlocBase = (function () {
+var BlocBase = /** @class */ (function () {
     function BlocBase(initialState) {
+        //_emitted: boolean;
         this._stateController = new rxjs_1.Subject;
         this._state = initialState;
         this.emit(initialState);
@@ -20,6 +21,7 @@ var BlocBase = (function () {
         this._stateController.subscribe(observer);
     }
     Object.defineProperty(BlocBase.prototype, "stream", {
+        //eventController = new Subject<Event>;
         get: function () {
             return this._stateController;
         },
@@ -47,4 +49,3 @@ var BlocBase = (function () {
     return BlocBase;
 }());
 exports.BlocBase = BlocBase;
-//# sourceMappingURL=bloc_base.js.map

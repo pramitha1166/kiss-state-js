@@ -1,1 +1,1 @@
-export * from './src/main'
+export * from './build/src/bloc'
