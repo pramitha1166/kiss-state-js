@@ -22,6 +22,7 @@ class CounterBloc extends Bloc<CounterEvent, number> {
   async *mapEventToState(event: CounterEvent) {
     switch (event) {
       case CounterEvent.increment:
+        //
         yield this.state + 1
         break
       case CounterEvent.decrement:

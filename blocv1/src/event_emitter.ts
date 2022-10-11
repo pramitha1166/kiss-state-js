@@ -5,7 +5,7 @@ export interface Listener<Event, State> {
 
 /// interface that dispose the event
 export interface Disposable{
-    dispose();
+    dispose() : any;
 }
 
 /// 
@@ -15,8 +15,10 @@ export class TypedEvent<Event, State> {
     private listners: Listener<Event, State>[] = [];
 
     /// 
-    on = (listener: Listener<Event, State>): Disposable => {
+    on = (listener: Listener<Event, State>): any => {
         this.listners.push(listener)
+        console.log("adding event")
+        //this.off(listener)
         return {
             dispose: () => this.off(listener)
         }
@@ -24,6 +26,7 @@ export class TypedEvent<Event, State> {
 
     off = (listner: Listener<Event, State>) => {
         var callbackIndex = this.listners.indexOf(listner)
+        console.log("dispose")
         if(callbackIndex>-1) {
             this.listners.splice(callbackIndex, 1)
         }

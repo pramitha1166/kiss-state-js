@@ -30,7 +30,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var rxjs_1 = require("rxjs");
 var list = new Array();
 console.log("sdd");
-var List = (function () {
+var List = /** @class */ (function () {
     function List() {
     }
     List.prototype.add = function (element) {
@@ -42,6 +42,9 @@ var List = (function () {
     };
     return List;
 }());
+// async function asynFunc(list: List): Promise<List> {
+//      await list.add("hello");
+// }
 function listIterator(list) {
     var i;
     return __generator(this, function (_a) {
@@ -50,15 +53,15 @@ function listIterator(list) {
                 i = 0;
                 _a.label = 1;
             case 1:
-                if (!(i < list.size)) return [3, 4];
-                return [4, list.get(i)];
+                if (!(i < list.size)) return [3 /*break*/, 4];
+                return [4 /*yield*/, list.get(i)];
             case 2:
                 _a.sent();
                 _a.label = 3;
             case 3:
                 i++;
-                return [3, 1];
-            case 4: return [2];
+                return [3 /*break*/, 1];
+            case 4: return [2 /*return*/];
         }
     });
 }
@@ -69,4 +72,3 @@ myList.add(3);
     .subscribe(function (i) {
     console.log(i);
 });
-//# sourceMappingURL=bloc_test.js.map

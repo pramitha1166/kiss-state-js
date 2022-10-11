@@ -1,8 +1,9 @@
 {
   "name": "kiss-js-bloc-react",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Bloc type state management solution for typescript | The react implementation",
-  "main": "index.ts",
+  "main": "./dist/kiss-js-bloc-react.js",
+  "types": "./dist/kiss-js-bloc-react.d.ts",
   "keywords": [
     "react",
     "state",
@@ -13,21 +14,31 @@
     "bloc"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js"
   },
   "author": "Pramitha Wanigarathne",
   "license": "ISC",
   "dependencies": {
     "kiss-js-bloc": "^1.0.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "ts-loader": "^9.4.1"
   },
+  "files": [
+    "dist",
+    "index.ts"
+  ],
   "devDependencies": {
-    "typescript": "^4.8.4",
+    "@babel/core": "^7.19.3",
+    "@babel/preset-env": "^7.19.3",
     "@types/node": "^18.7.17",
     "@types/react": "^18.0.9",
-    "@types/react-dom": "^18.0.3"
-
+    "@types/react-dom": "^18.0.3",
+    "babel-loader": "^8.2.5",
+    "typescript": "^4.8.4",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   },
   "repository": {
     "type": "git",

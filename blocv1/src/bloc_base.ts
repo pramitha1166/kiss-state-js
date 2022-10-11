@@ -1,4 +1,3 @@
-import { emit } from 'process';
 import {Observable, Subject, Subscription, of, from, Observer} from 'rxjs'
 
 /// An object that provides acess to a stream of state over time.
@@ -7,8 +6,13 @@ export interface Streamable<State extends Object> {
   get state(): State
 }
 
-/// A [Streamable] that provide synchronize access to current [state]
-export interface StateStreamable<State> extends Streamable<State> {
+/**
+ * Object that represents rxjs stream obervable
+ * 
+ *
+ * @interface StateStreamable<T extends Object>
+ */
+export interface StateStreamable<State extends Object> extends Streamable<State> {
     get stream(): Observable<State>;
 }
 
@@ -29,7 +33,7 @@ export interface Closable{
 
 
 
-export abstract class BlocBase<State, Event> implements StateStreamable<State>, Emittable<State>, ErrorSink {
+export abstract class BlocBase<State extends Object, Event> implements StateStreamable<State>, Emittable<State>, ErrorSink {
 
     _state : State;
     //_emitted: boolean;
@@ -54,10 +58,10 @@ export abstract class BlocBase<State, Event> implements StateStreamable<State>, 
         this.emit(initialState)
 
         var observer = {
-            next: function(value) {
+            next: function(value: any) {
                 console.log("State emited ", value)
             },
-            error: function(error) {
+            error: function(error: any) {
                 console.log(error)
             },
             completed: function() {

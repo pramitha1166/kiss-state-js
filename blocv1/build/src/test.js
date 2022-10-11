@@ -16,24 +16,33 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var bloc_1 = require("./bloc");
-var CounterEvent = (function () {
+var CounterEvent = /** @class */ (function () {
     function CounterEvent() {
     }
     return CounterEvent;
 }());
-var IncrementEvent = (function (_super) {
+var IncrementEvent = /** @class */ (function (_super) {
     __extends(IncrementEvent, _super);
     function IncrementEvent() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.fNumber = 100;
+        _this.fNumber = 10;
         return _this;
     }
     return IncrementEvent;
 }(CounterEvent));
-var CounterBloc = (function (_super) {
+var DecreamentEvent = /** @class */ (function (_super) {
+    __extends(DecreamentEvent, _super);
+    function DecreamentEvent() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.fNumber = 10;
+        return _this;
+    }
+    return DecreamentEvent;
+}(CounterEvent));
+var CounterBloc = /** @class */ (function (_super) {
     __extends(CounterBloc, _super);
     function CounterBloc() {
-        return _super.call(this, 10) || this;
+        return _super.call(this, 0) || this;
     }
     CounterBloc.prototype.increament = function () {
         return this.addNewState(this.state + 4);
@@ -43,10 +52,24 @@ var CounterBloc = (function (_super) {
     };
     return CounterBloc;
 }(bloc_1.Bloc));
+// increamentE(val: number) {
+// }
 var bloc = new CounterBloc();
+// bloc.on<IncrementEvent>(new IncrementEvent(), (event) => {
+//     return event.fNumber + 10;
+// });
+// bloc.call(IncrementEvent)
+// console.log(bloc.state);
 bloc.on(new IncrementEvent(), function (event) {
-    return event.fNumber + 2;
+    //bloc.state + 
+    console.log("state when adding event " + bloc.state);
+    return bloc.state + 1;
 });
+bloc.on(new DecreamentEvent(), function (event) {
+    return bloc.state - 1;
+});
+//bloc.increament()
+//bloc.decreament()
 bloc.call(IncrementEvent);
+bloc.call(DecreamentEvent);
 console.log(bloc.state);
-//# sourceMappingURL=test.js.map

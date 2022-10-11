@@ -1,1 +1,1 @@
-export * from './lib/bloc-builder'
+export * from './dist/lib/bloc'
